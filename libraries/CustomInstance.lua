@@ -1,4 +1,3 @@
-local InstanceTypes = require(script.Parent.InstanceTypes)
 local customInstanceMethods = {}
 customInstanceMethods.__index = customInstanceMethods
 customInstanceMethods.__tostring = function(self)
