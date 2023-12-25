@@ -64,7 +64,7 @@ function DSFunctions:_SaveCache(Cache)
 		if not data then continue end
 		self:SaveData(key, data)
 		self:RemoveFromCache(key)
-		print(`Saved {key}'s data`)
+		print("Saved "..key.."'s data")
 		task.wait(.1)
 	end
 end
@@ -97,3 +97,38 @@ return function(Name, Template: {}, SaveType, Settings: {})
 	self:InitializeCache()
 	return self
 end
+
+
+--[[	USAGE EXAMPLE:
+
+
+local NumberDS = rxscript.GetDataStore("Numbers", {"Number"}, "Leaderstats", rxscript.InstanceTypes.DataStoreSettings(true,true,nil, 5))
+
+game.Players.PlayerAdded:Connect(function(plr)
+	local leaderstats = api.CreateLeaderstats(plr,{
+		Number = {"IntValue",10}
+	})
+	
+	local data = NumberDS:GetData(plr.UserId)
+	if not data then return end
+	leaderstats.Number.Value = data.Number
+end)
+
+game.Players.PlayerRemoving:Connect(function(plr)
+	NumberDS:AddRequestToCache(plr.UserId, {plr.leaderstats.Number.Value})
+end)
+
+game:BindToClose(function()
+	for key,data in NumberDS:GetCache() do
+		NumberDS:SaveData(key,data)
+		NumberDS:RemoveFromCache(key)
+	end
+end)
+
+task.spawn(function() (to save every player's data every cachecycletime seconds)
+	while task.wait(NumberDsSettings.CacheCycleTime-1) do
+		for _,plr in game.Players:GetPlayers() do
+			NumberDS:AddRequestToCache(plr.UserId, {plr.leaderstats.Number.Value})
+		end
+	end
+end)]]--
