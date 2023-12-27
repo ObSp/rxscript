@@ -3,14 +3,24 @@ local UIS = game:GetService("UserInputService")
 local inputFunctions = {}
 inputFunctions.__index = inputFunctions
 
-function inputFunctions:ConnectFunction(func)
+function inputFunctions:BindToPress(func)
+	if self._pressfunc() then self._pressfunc:Disconnect() end
 	self._active = true
-	if func then
-		self.func = func
-	end
+	self._pressfunc = func
 	UIS.InputBegan:Connect(function(key, processed)
 		if (not table.find(self.Triggers,key.KeyCode) and not table.find(self.Triggers,key.UserInputType)) or processed or not self._active then return end
-		self.func()
+		self._pressfunc()
+	end)
+	return self
+end
+
+function inputFunctions:BindToRelease(func)
+	if self._releasefunc() then self._releasefunc:Disconnect() end
+	self._active = true
+	self._releasefunc = func
+	UIS.InputEnded:Connect(function(key, processed)
+		if (not table.find(self.Triggers,key.KeyCode) and not table.find(self.Triggers,key.UserInputType)) or processed or not self._active then return end
+		self._releasefunc()
 	end)
 	return self
 end
@@ -31,14 +41,9 @@ function inputFunctions:SetTriggers(Triggers)
 end
 
 
-return function(Triggers: {}, func: any?)
+return function(Triggers: {})
 	local obj = setmetatable({}, inputFunctions)
 	obj.Triggers = Triggers
 	obj._active = false
-	if func then
-		obj.func = func
-		obj._active = true
-		obj:ConnectFunction()
-	end
 	return obj
 end
