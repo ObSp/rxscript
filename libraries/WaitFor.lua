@@ -5,7 +5,7 @@ return function(parent: Instance, path:string, maxwait: number?)
 	for _,pathitem in string.split(path, ".") do
 		
 		if maxwait and os.time()>st+maxwait then
-			error("Exceeded maximum wait time, please make sure the instance exists and that your path is corrent")
+			error("Exceeded maximum wait time, please make sure the instance exists and that your path is correct")
 		end
 		
 		local obj = last:WaitForChild(pathitem)
