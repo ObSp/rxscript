@@ -1,14 +1,14 @@
 # rxscript
-A custom roblox luau api that lets you get things done faster! Features more than 20 unique libraries all built into one module script. Will be published to roblox soon, in the meantime all the sourcecode is available here!
+A roblox luau library that lets you get things done faster! Features more than 20 unique libraries all built into one module script. Will be published to roblox soon, in the meantime all the sourcecode is available here!
 
 # main.lua
-The main module containing all of the different libraries.
+The main module containing all of the different modules.
 
 # Camera.lua
-A very small library that lets you easily switch between the main two camera types.
+A very small module that lets you easily switch between the main two camera types.
 
 # CreateLeaderstats
-A one-function library that makes it easier to create leaderstats.
+A one-function module that makes it easier to create leaderstats.
 
 # Create Zone
 A rather big module to create and manage "Zones". This is very useful if you want different effects for different areas of your game, ex. music or lighting effects.
