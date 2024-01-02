@@ -1,6 +1,4 @@
 return function(t, value)
-	for i,v in t do
-		if v == value then table.remove(t,i) end
-	end
+	table.remove(t, table.find(t, value))
 	return t
 end

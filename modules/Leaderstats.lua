@@ -1,4 +1,6 @@
-return function(player: Player, template: {})
+local ldfuncs = {}
+
+function ldfuncs.Create(player: Player, template: {})
 	local ld = Instance.new("Folder")
 	ld.Name = "leaderstats"
 	ld.Parent = player
@@ -10,3 +12,11 @@ return function(player: Player, template: {})
 	end
 	return ld
 end
+
+function ldfuncs.Auto(template: {})
+	game.Players.PlayerAdded:Connect(function(player)
+		ldfuncs.Create(player, template)
+	end)
+end
+
+return ldfuncs
