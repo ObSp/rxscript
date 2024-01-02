@@ -70,8 +70,23 @@ function DSFunctions:_SaveCache(Cache)
 end
 
 function DSFunctions:InitializeCache()
+	local function GetValueFromPath(start: Player, path: string)
+		local current = start
+		for _,pathItem in path:split(".") do
+			local item = current[pathItem]
+			if not item then error(`Instance {pathItem} not found in parent {current.Name}}`) end
+			current = item
+		end
+	end
 	task.spawn(function()
 		while task.wait(self.Settings.CacheCycleTime) do
+			for _, plr in game.Players:GetPlayers() do
+				local saveTable = {}
+				for k,v in self.Template do
+					saveTable[k] = GetValueFromPath(plr, v)
+				end
+				self:AddRequestToCache(plr.UserId, saveTable)
+			end
 			self:_SaveCache()
 		end
 	end)
@@ -94,7 +109,6 @@ return function(Name, Template: {}, SaveType, Settings: {})
 	self.SaveType = SaveType
 	self.Settings = Settings
 	self.Cache = {}
-	self:InitializeCache()
 	return self
 end
 
@@ -102,7 +116,7 @@ end
 --[[	USAGE EXAMPLE:
 
 
-local NumberDS = rxscript.GetDataStore("Numbers", {"Number"}, "Leaderstats", rxscript.InstanceTypes.DataStoreSettings(true,true,nil, 5))
+local NumberDS = rxscript.GetDataStore("Numbers", {"Number" = ".leaderstats.Number.Value"}, "Leaderstats", rxscript.InstanceTypes.DataStoreSettings(true,true,nil, 5))
 
 game.Players.PlayerAdded:Connect(function(plr)
 	local leaderstats = api.CreateLeaderstats(plr,{
