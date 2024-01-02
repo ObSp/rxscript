@@ -1,5 +1,5 @@
 # rxscript
-A roblox luau library that lets you get things done faster! Features more than 20 unique libraries all built into one module script. Will be published to roblox soon, in the meantime all the sourcecode is available here!
+A roblox luau library that lets you get things done faster! Features more than 20 unique modules all built into one module script. Will be published to roblox soon, in the meantime all the sourcecode is available here!
 
 # main.lua
 The main module containing all of the different modules.
