@@ -1,4 +1,4 @@
--- Not much yet, more will be added as I continue writing modules for rxscript, as of now you can just make your own InstanceTypes like this!
+-- Not much yet, more will be added as I continue writing modules for rxscript, as of now you can just make your own InstanceTypes here!
 
 local module = {}
 
